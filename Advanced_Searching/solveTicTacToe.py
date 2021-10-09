@@ -144,13 +144,6 @@ class TicTacToeAgent():
           You can initialize some variables here, but please do not modify the input parameters.
         """
         self.win_states = [a, b**2, b*c, c**2]
-        self.convert_values = [(a**2, 1), (b**3, b), ((b**2)*c, c), (c**3, a*(c**2)),
-                               ((b**2)*d, d), (c*d, a*d), (d**2, c**2)]
-        self.possible_min_values = [1, a, b, a*b, b**2, a*(b**2), c, a*c, b*c, a*b*c, c**2,
-                                    a*(c**2), b*(c**2), a*b*(c**2), d, a*d, b*d, a*b*d]
-
-        self.me = 1
-        self.ai = 0
         self.search_depth = 2
 
     def get_boards_value(self, boards):
@@ -160,88 +153,9 @@ class TicTacToeAgent():
 
         result = board_A*board_B*board_C
 
-        # while result not in self.possible_min_values:
-        #     for i in self.convert_values:
-        #         if result%i[0] == 0:
-        #             result = (result/i[0])*i[1]
-
         return result 
 
     def getAction(self, gameState, gameRules):
-        # actions = gameState.getLegalActions(gameRules)
-        # current_dead = [gameRules.deadTest(i) for i in gameState.boards]
-        # current_dead_count = current_dead.count(True)
-        # # if current_dead_count == 2:
-        # #     alive_board = current_dead.index(False)
-        # #     if alive_board == 0:
-        # #         last_baord = 'A'
-        # #     elif alive_board == 1:
-        # #         last_baord = 'B'
-        # #     elif alive_board == 2:
-        # #         last_baord = 'C'
-
-        # #     if gameState.boards[alive_board].count(False) == 9:
-        # #         return last_baord+'4'
-
-        # kill_moves = []
-        # best_moves = []
-        # second_best_moves = []
-        # at_least_wont_die_moves = []
-        
-        # for action in actions:
-        #     successor_state = gameState.generateSuccessor(action)
-        #     future_actions = successor_state.getLegalActions(gameRules)
-
-        #     for future_action in future_actions:
-        #         succ_succ_state = successor_state.generateSuccessor(future_action)
-        #         result = self.get_boards_value(succ_succ_state.boards)
-        #         succ_succ_dead_count = [gameRules.deadTest(i) for i in succ_succ_state.boards]
-
-        #         if result not in self.win_states:
-        #             if action not in second_best_moves:
-        #                 second_best_moves.append(action)
-
-        #     result = self.get_boards_value(successor_state.boards)
-
-        #     future_dead = [gameRules.deadTest(i) for i in successor_state.boards]
-        #     future_dead_count = future_dead.count(True)
-
-        #     if result in self.win_states:
-        #         best_moves.append(action)
-
-        #         if future_dead_count > current_dead_count and current_dead_count == 0:
-        #             kill_moves.append(action)
-
-        #         # if future_dead_count > current_dead_count and current_dead_count == 1:
-        #         #     best_moves.remove(action)
-
-        #         # if future_dead_count > current_dead_count and current_dead_count == 2:
-        #         #     actions.remove(action)
-
-        #         if result != 1:
-        #             at_least_wont_die_moves.append(action)
-
-        # if len(kill_moves) != 0:
-        #     return random.choice(kill_moves)
-
-        # if len(best_moves) != 0:
-        #     return random.choice(best_moves)
-
-        # if len(second_best_moves) != 0:
-        #     return random.choice(second_best_moves)
-
-        # if len(at_least_wont_die_moves) != 0:
-        #     return random.choice(at_least_wont_die_moves)
-
-        # # print(actions)
-        # # gameState.printBoards(gameRules)
-        # return random.choice(actions)
-
-        # # return random.choice(best_moves)
-        # util.raiseNotDefined()
-        alpha = float('-inf')
-        beta = float('-inf')
-
         return self.max_value(gameState, gameRules, 1)[1]
 
     def evaluation_function(self, gameState, gameRules):
@@ -442,16 +356,13 @@ class Game():
         self.AIPlayer    = TicTacToeAgent()
 
         if randomAI:
-            # self.AIPlayer = randomAgent()
-            self.AIPlayer = TicTacToeAgent()
+            self.AIPlayer = randomAgent()
         else:
             self.AIPlayer = TicTacToeAgent()
         if AIforHuman:
-            # self.HumanAgent = randomAgent()
-            self.HumanAgent = TicTacToeAgent()
+            self.HumanAgent = randomAgent()
         else:
-            # self.HumanAgent = keyboardAgent()
-            self.HumanAgent = TicTacToeAgent()
+            self.HumanAgent = keyboardAgent()
 
     def run(self):
         """
